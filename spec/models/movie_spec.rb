@@ -13,5 +13,11 @@ describe Movie do
         expect {Movie.find_in_tmdb('Inception') }.to raise_error(Movie::InvalidKeyError)
       end
     end
+    context 'test' do
+      it 'should return empty array []' do
+        expect( Tmdb::Movie).to receive(:find).with('Inception')
+        Movie.find_in_tmdb('Inception')
+      end
+    end
   end
 end
