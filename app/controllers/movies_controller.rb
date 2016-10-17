@@ -62,7 +62,38 @@ class MoviesController < ApplicationController
   end
   
   def search_tmdb
-    @movies=Movie.find_in_tmdb(params[:search_terms])
+    
+    @movies_hash = Hash.new
+    
+    @search_query = params[:search_box]
+    if @search_query == "" || @search_query == nil
+      flash[:notice] = "Invalid Search Terms Entered"
+      redirect_to movies_path
+    else
+      @valid_search = Hash.new
+      @movies_returned = Movie.find_in_tmdb(@search_query)
+
+      if @movies_returned.empty?
+        flash[:notice] = "No Movies Found On TMDb Matching Your Search"
+        redirect_to movies_path
+      end
+    end
+
+  end #end of search_tmdb
+  
+  def add_tmdb_movies
+    selected_movies_hash = params[:tmdb_movies]
+    tmdb_ids_array = selected_movies_hash.keys
+    
+    if selected_movies_hash.empty?
+      flash[:notice] = "No Movies Found On TMDb Matching Your Search"
+    else
+      tmdb_ids_array.each do |current_id|
+        Movie.create_from_tmdb(current_id)
+      end
+    end
+    
+    redirect_to movies_path
   end
 
 end

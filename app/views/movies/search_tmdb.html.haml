@@ -1,0 +1,28 @@
+-#  This file is app/views/movies/search_tmdb.html.haml
+%h1 The following movies containing #{@search_text} were found on TMDb
+
+= form_tag :action => 'add_tmdb_movies' do
+
+  %table#movies
+    %thead
+      %tr
+        %th Movie Title
+        %th Rating
+        %th Release Date
+        %th select
+    %tbody
+      - @movies_returned.each do |movie|
+        %tr
+          %td= movie[:title]
+          %td= movie[:rating]
+          %td= movie[:release_date]
+          %td= check_box_tag "tmdb_movies[#{movie[:tmdb_id]}]", :id => "checkbox_#{movie[:tmdb_id]}"
+
+
+  = submit_tag 'Add Selected Movies', :id => 'movies_button'
+
+
+= link_to 'Add new movie', new_movie_path
+
+
+ 

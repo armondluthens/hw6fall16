@@ -10,6 +10,7 @@
     = check_box_tag "ratings[#{rating}]", 1, @selected_ratings.include?(rating), :id => "ratings_#{rating}"
   = submit_tag 'Refresh', :id => 'ratings_submit'
 
+
 %table#movies
   %thead
     %tr
@@ -18,6 +19,7 @@
       %th{:class => @date_header}= link_to 'Release Date', movies_path(:sort => 'release_date', :ratings => @selected_ratings), :id => 'release_date_header'
       %th More Info
   %tbody
+ 
     - @movies.each do |movie|
       %tr
         %td= movie.title 
@@ -25,4 +27,13 @@
         %td= movie.release_date
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
+
+= form_tag :action => 'search_tmdb' do
+  %label{:for => 'search_box'} Search for movie titles containing:
+  = text_field_tag 'search_box'
+  = submit_tag 'Search TMDB', :id => 'search_button' 
+  
+  
 = link_to 'Add new movie', new_movie_path
+
+

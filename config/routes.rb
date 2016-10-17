@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # map '/' to be a redirect to '/movies'
   root :to => redirect('/movies')
   post 'movies/search_tmdb'
+  post 'movies/add_tmdb_movies'
   
   # Example resource route with options:
   #   resources :products do
